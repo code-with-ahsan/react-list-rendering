@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { IUser } from "../interfaces/User";
 
 type UserCardProps = {
@@ -7,6 +7,9 @@ type UserCardProps = {
 };
 
 export const UserCard: FC<UserCardProps> = ({ user, onDelete }) => {
+  useEffect(() => {
+    console.log(`rendering for ${user.email}`);
+  }, []);
   return (
     <li
       style={{
@@ -23,8 +26,16 @@ export const UserCard: FC<UserCardProps> = ({ user, onDelete }) => {
         <h5>{user.post.title}</h5>
         <p>{user.post.body}</p>
       </article>
+      <div style={{ margin: "10px 0" }}>
+        <input
+          style={{ width: "60%", padding: "16px", borderRadius: "6px" }}
+          defaultValue={user.email}
+          placeholder={user.email}
+        />
+      </div>
       <button
         onClick={() => {
+          console.time("rendering");
           onDelete(user.id);
         }}
       >
